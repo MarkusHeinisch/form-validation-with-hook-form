@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Select({ register, name, options, label, error, ...rest }) {
+export default function Select({ register, name, options, label, error, additional, ...rest }) {
 	return(
 		<div className="mb-3">
 			<label className="form-label" htmlFor={name}>{label}</label>
@@ -10,6 +10,7 @@ export default function Select({ register, name, options, label, error, ...rest 
 				)}
 			</select>
 			{error && <div>{error.message}</div>}
+			{additional && <>{additional}</>}
 		</div>
 	);
 }
