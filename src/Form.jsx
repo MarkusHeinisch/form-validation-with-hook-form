@@ -100,6 +100,7 @@ export default function Form({ setCompleted }) {
 				register={register({
 					required: "This field is required"
 				})}
+				className={"foo,form-control,bar,form-control,form-control"}
 			/>
 			<Input
 				name="email"
