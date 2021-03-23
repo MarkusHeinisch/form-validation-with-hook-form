@@ -1,4 +1,5 @@
 import React from "react";
+import Label from "./Label";
 import { buildClassName } from "./Util";
 
 export default function Input({ register, name, label, error, additional, ...rest }) {
@@ -11,7 +12,7 @@ export default function Input({ register, name, label, error, additional, ...res
 
 	return(
 		<div className="mb-3">
-			<label className="form-label" htmlFor={name}>{label}</label>
+			<Label htmlFor={name} label={label} />
 			<input id={name} name={name} ref={register} {...rest} className={className} />
 			{error && <div className="invalid-feedback">{error.message}</div>}
 			{additional && <>{additional}</>}

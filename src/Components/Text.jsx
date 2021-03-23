@@ -1,4 +1,5 @@
 import React from "react";
+import Label from "./Label";
 import { buildClassName } from "./Util";
 
 export default function Text({ register, name, label, error, additional, ...rest }) {
@@ -8,7 +9,7 @@ export default function Text({ register, name, label, error, additional, ...rest
 
 	return(
 		<div className="mb-3">
-			<label className="form-label" htmlFor={name}>{label}</label>
+			<Label htmlFor={name} label={label} />
 			<textarea id={name} name={name} ref={register} {...rest} className={className}></textarea>
 			{error && <div className="invalid-feedback">{error.message}</div>}
 			{additional && <>{additional}</>}
