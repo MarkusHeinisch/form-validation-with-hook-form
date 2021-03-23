@@ -1,13 +1,6 @@
-/*
-	TODO
-	Add git
-
-	BUG
-	Backlink is wrong, after the form completion
-*/
-
 import React, { useEffect, useRef } from 'react';
 import { useForm } from "react-hook-form";
+import Input from "./Input";
 
 export default function Form({ setCompleted }) {
 
@@ -84,7 +77,7 @@ export default function Form({ setCompleted }) {
 	return(
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div>
-				<label class="form-label" htmlFor="tickets">
+				<label className="form-label" htmlFor="tickets">
 					Tickets *
 				</label>
 				<select
@@ -100,7 +93,7 @@ export default function Form({ setCompleted }) {
 				{errors.tickets && "This field is required"}
 			</div>
 			<div>
-				<label class="form-label" htmlFor="name">
+				<label className="form-label" htmlFor="name">
 					Name *
 				</label>
 				<input
@@ -114,7 +107,7 @@ export default function Form({ setCompleted }) {
 				{errors.name && <p>{errors.name.message}</p>}
 			</div>
 			<div>
-				<label class="form-label" htmlFor="email">
+				<label className="form-label" htmlFor="email">
 					Email *
 				</label>
 				<input
@@ -133,7 +126,7 @@ export default function Form({ setCompleted }) {
 				{errors.email && <div>{errors.email.message}</div>}
 			</div>
 			<div>
-				<label class="form-label" htmlFor="message">
+				<label className="form-label" htmlFor="message">
 					Message (optional)
 				</label>
 				<textarea
@@ -151,7 +144,7 @@ export default function Form({ setCompleted }) {
 					name="optin"
 					ref={register({required:true})}
 				/>
-				<label class="form-label" htmlFor="optin">
+				<label className="form-label" htmlFor="optin">
 					Agree to terms and conditions *
 				</label>
 				{errors.optin && "This field is required"}
