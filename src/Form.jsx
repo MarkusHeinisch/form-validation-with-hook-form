@@ -1,15 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import { useForm } from "react-hook-form";
-import Input from "./Input";
+import Input from "./Components/Input";
+import Select from "./Components/Select";
+import Text from "./Components/Text";
 
 export default function Form({ setCompleted }) {
 
 	const defaultValues = {
-		tickets: 1,
+		/*tickets: 1,
 		name: "Peter",
 		email: "peter.parker@dot.net",
 		message: "Maybe i will arrive a little later",
-		optin: true
+		optin: true*/
 	}
 
 	const [ submitting, setSubmitting ] = React.useState(false);
@@ -76,87 +78,88 @@ export default function Form({ setCompleted }) {
 
 	return(
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<div>
-				<label className="form-label" htmlFor="tickets">
-					Tickets *
-				</label>
-				<select
-					id="tickets"
-					name="tickets"
-					className="form-control"
-					ref={register({ required: true })}
-				>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-				</select>
-				{errors.tickets && "This field is required"}
-			</div>
-			<div>
-				<label className="form-label" htmlFor="name">
-					Name *
-				</label>
-				<input
-					type="text"
-					id="name"
-					name="name"
-					className="form-control"
-					placeholder="Enter name"
-					ref={register({ required: "This field is required" })}
-				/>
-				{errors.name && <p>{errors.name.message}</p>}
-			</div>
-			<div>
-				<label className="form-label" htmlFor="email">
-					Email *
-				</label>
-				<input
-					id="email"
-					name="email"
-					className="form-control"
-					placeholder="Enter email"
-					ref={register({
-						required: "This field is required",
-						pattern: {
-							value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-							message: "Enter a valid e-mail address",
-						}
-					})}
-				/>
-				{errors.email && <div>{errors.email.message}</div>}
-			</div>
-			<div>
-				<label className="form-label" htmlFor="message">
-					Message (optional)
-				</label>
-				<textarea
-					id="message"
-					name="message"
-					className="form-control"
-					placeholder="You can leave a optional message if you want"
-					ref={register}
-				></textarea>
-			</div>
-			<div>
-				<input
-					type="checkbox"
-					id="optin"
-					name="optin"
-					ref={register({required:true})}
-				/>
-				<label className="form-label" htmlFor="optin">
-					Agree to terms and conditions *
-				</label>
-				{errors.optin && "This field is required"}
-			</div>
-			<div>
-				<button type="submit" className="btn btn-primary" disabled={submitting}>
-					Submit
-				</button>
-				{serverError && (
-					<div>{serverError.message}</div>
-				)}
-			</div>
+			<Select
+				name="tickets"
+				error={errors.tickets}
+				label={"Tickets"}
+				options= {[
+					{ value: "", label: "Please choose the number of tickets" },
+					{ value: "1", label: "1" },
+					{ value: "2", label: "2" },
+					{ value: "3", label: "3" }
+				]}
+				register={register({
+					required: "This field is required"
+				})}
+			/>
+			<Input
+				name="name"
+				error={errors.name}
+				label={"Name"}
+				placeholder={"Please enter your name"}
+				register={register({
+					required: "This field is required"
+				})}
+			/>
+			<Input
+				name="email"
+				error={errors.email}
+				label={"Email"}
+				placeholder={"Please enter your email"}
+				register={register({
+					required: "This field is required",
+					pattern: {
+						value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+						message: "Enter a valid e-mail address",
+					}
+				})}
+			/>
+			<Input
+				name="password"
+				error={errors.password}
+				label={"Password"}
+				type={"password"}
+				register={register({
+					required: "This field is required",
+					minLength: {
+						value: 8,
+						message: "must be 8 chars at minimum",
+					},
+					maxLength: {
+						value: 20,
+						message: "must be 20 chars at maximum",
+					},
+					validate: (value) => {
+						return (
+							[/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every((pattern) =>
+							pattern.test(value)
+							) || "must include lower, upper, number, and special chars"
+						);
+					}
+				})}
+			/>
+			<Text
+				id="message"
+				name="message"
+				label="Your message (optional)"
+				className="form-control"
+				placeholder="You can leave a optional message if you want"
+			/>
+			<Input
+				name="optin"
+				error={errors.optin}
+				type="checkbox"
+				label={"Agree to terms and conditions *"}
+				register={register({
+					required: "This field is required"
+				})}
+			/>
+			<button type="submit" className="btn btn-primary" disabled={submitting}>
+				Submit
+			</button>
+			{serverError && (
+				<div>{serverError.message}</div>
+			)}
 		</form>
 	)
 }
