@@ -4,7 +4,8 @@
   "description": "It's a simple form to register workshops.",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --mode=development"
+    "start": "webpack serve --mode=development",
+	"prod": "webpack --mode=production"
   },
   "author": "Markus Heinisch",
   "license": "MIT",

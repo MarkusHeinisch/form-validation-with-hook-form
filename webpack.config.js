@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-	mode: 'development',
+	//mode: 'production',
 	entry: path.join(__dirname, 'src', 'index.jsx'),
 	module: {
 	rules: [
@@ -38,12 +38,17 @@ module.exports = {
 		clean: true
 	},
 	devServer: {
-		writeToDisk: false
+		writeToDisk: true
 	},
 	optimization: {
 		minimize: true,
 	},
 	devServer: {
 		historyApiFallback: true,
-	}
+	},
+	/*performance: {
+		hints: false,
+		maxEntrypointSize: 512000,
+		maxAssetSize: 512000
+	}*/
 };
