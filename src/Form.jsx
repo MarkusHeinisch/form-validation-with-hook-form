@@ -4,14 +4,15 @@ import Input from "./Components/Input";
 import Select from "./Components/Select";
 import Text from "./Components/Text";
 
-export default function Form({ setCompleted }) {
+export default function Form({ setCompleted, post_id }) {
 
 	const defaultValues = {
-		/*tickets: 1,
+		tickets: 1,
 		name: "Peter",
 		email: "peter.parker@dot.net",
 		message: "Maybe i will arrive a little later",
-		optin: true*/
+		password: "myPassword22!",
+		optin: true
 	}
 
 	const [ submitting, setSubmitting ] = React.useState(false);
@@ -24,9 +25,12 @@ export default function Form({ setCompleted }) {
 		setSubmitting(true);
 		setServerError();
 
+		//append post_id to form data
+		formData.post_id = post_id;
+
 		try {
 			// api call
-			const response = await fetch("http://localhost/form/", {
+			const response = await fetch("http://localhost/wordpress/api/workshop/registration", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
@@ -40,12 +44,22 @@ export default function Form({ setCompleted }) {
 			}
 
 			const responseData = await response.json();
-			if(responseData.status == 'error' && responseData.errors) {
+			if(responseData.status == 'error') {
 
-				//set field error manually by server response
-				Object.keys(responseData.errors).map(key => {
-					setError(key, { message: responseData.errors[key] });
-				});
+				if(responseData.errors) {
+
+					//set field error manually by server response
+					Object.keys(responseData.errors).map(key => {
+						setError(key, { message: responseData.errors[key] });
+					});
+
+				} else {
+
+					//set error message by server response: an error has occurred
+					setServerError(responseData);
+					console.error(responseData.message);
+
+				}
 
 			} else {
 
@@ -59,7 +73,7 @@ export default function Form({ setCompleted }) {
 
 		} catch(error) {
 
-			//set error message by server response: api does no answer
+			//set error message by server response: api does not answer
 			setServerError(error);
 			console.error(error);
 

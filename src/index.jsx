@@ -8,7 +8,7 @@ import App from "./App";
 const entryPoint = document.getElementById("app");
 if(entryPoint) {
 	ReactDom.render(
-		<App/>,
+		<App {...app.dataset} />,
 		entryPoint
 	);
 }
