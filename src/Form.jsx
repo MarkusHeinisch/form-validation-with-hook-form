@@ -16,14 +16,14 @@ export default function Form({ setCompleted, post_id }) {
 	}
 
 	const [ submitting, setSubmitting ] = React.useState(false);
-	const [ serverError, setServerError ] = React.useState([]);
+	const [ serverError, setServerError ] = React.useState(null);
 	const { register, handleSubmit, errors, reset, setError } = useForm({ defaultValues });
 
 	// backend form validation
 	const onSubmit = async (formData) => {
 
 		setSubmitting(true);
-		setServerError();
+		setServerError(null);
 
 		//append post_id to form data
 		formData.post_id = post_id;
@@ -174,12 +174,13 @@ export default function Form({ setCompleted, post_id }) {
 					required: "This field is required"
 				})}
 			/>
+			{serverError && (
+				<div className="alert alert-danger">{serverError.message}</div>
+			)}
 			<button type="submit" className="btn btn-primary" disabled={submitting}>
 				Submit
 			</button>
-			{serverError && (
-				<div>{serverError.message}</div>
-			)}
+
 		</form>
 	)
 }
